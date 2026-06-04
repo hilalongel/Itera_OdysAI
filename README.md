@@ -1,7 +1,7 @@
 # Here are your Instructions
 # OdysAI
 
-An AI-powered travel itinerary planner. Users sign up, set their travel preferences (destination, dates, budget, travel style, activities), and an AI agent generates a structured day-by-day itinerary that is saved to their account.
+An AI-powered travel itinerary planner. Users sign up, set their travel preferences (destination, dates, budget, travel style, activities), and an AI agent generates a structured day by day itinerary that is saved to their account.
 
 - **Backend:** FastAPI + SQLite, with JWT cookie authentication. Itineraries are generated through the [Groq](https://console.groq.com) API (OpenAI-compatible).
 - **Frontend:** React (Create React App + CRACO), styled with Tailwind CSS.
