@@ -13,7 +13,6 @@ ACCESS_TOKEN_DAYS = 7
 ACCESS_TOKEN_MAX_AGE = ACCESS_TOKEN_DAYS * 24 * 60 * 60
 COOKIE_NAME = "access_token"
 
-
 def hash_password(password: str) -> str:
     salt = bcrypt.gensalt()
     return bcrypt.hashpw(password.encode("utf-8"), salt).decode("utf-8")
