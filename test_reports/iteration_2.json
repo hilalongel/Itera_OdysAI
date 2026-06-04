@@ -1,0 +1,38 @@
+{
+  "summary": "Re-test after auth refactor (localStorage JWT -> httpOnly cookie). Backend: 21/21 pytest tests pass — login/signup set HttpOnly access_token cookie and return only {user} (no token in body), /auth/me works with cookie & with Bearer fallback & returns 401 without auth, /auth/logout clears cookie (subsequent /me = 401, and /logout itself requires auth). Full itinerary CRUD + Gemini /api/chat + cross-user isolation all green. Frontend E2E (1440x900): signup -> dashboard, httpOnly access_token cookie observed in browser, reload preserves session via /auth/me, prefs -> Generate -> Gemini reply + day-by-day itinerary renders, Save adds sidebar item, Clear + reload saved item works, Delete removes it, Logout returns to /login AND clears cookie, protected route guard redirects unauthenticated user to /login, login with same creds restores session. No regressions vs iteration_1.",
+  "backend_issues": {
+    "critical": [],
+    "minor": [
+      {"endpoint": "/api/itineraries/{id} (non-owner)", "issue": "Returns 404 for itineraries owned by another user instead of 403. Acceptable hide-existence pattern but inconsistent with /api/users/{id}/itineraries which returns 403. Same as iteration_1."}
+    ]
+  },
+  "frontend_issues": {
+    "ui_bugs": [],
+    "integration_issues": [],
+    "design_issues": []
+  },
+  "test_report_links": [
+    "/app/backend/tests/backend_test.py",
+    "/app/test_reports/pytest/pytest_results.xml"
+  ],
+  "action_items": [],
+  "critical_code_review_comments": [
+    "auth.py set_auth_cookie uses secure=True + samesite='lax' + httponly=True — correct for production HTTPS preview. Confirmed cookie attributes via Set-Cookie header check (HttpOnly present).",
+    "CORS middleware uses allow_origin_regex='.*' with allow_credentials=True. Browsers DO accept this because Starlette echoes the Origin back as Access-Control-Allow-Origin (not literal '*'), and the preview URL is same-origin in our test — works in practice. Worth a comment that for stricter prod deployments, pin to an explicit allow_origins list.",
+    "server.py /auth/logout depends on get_current_user — good: prevents anonymous cookie-clear pings; returns 401 if already logged out (verified in test_logout_requires_auth).",
+    "Login/signup correctly omit `token` from response body — verified by 'token not in body' assertion in tests.",
+    "Frontend api.js correctly sets withCredentials:true; AuthContext correctly treats user=null as 'checking' and false as 'guest' to avoid flashing /login during initial /auth/me check.",
+    "Iteration_1 noted token in localStorage as XSS risk — that concern is now resolved by the httpOnly cookie move.",
+    "Minor: server.py uses deprecated @app.on_event('startup') — consider FastAPI lifespan API (non-blocking)."
+  ],
+  "updated_files": [
+    "/app/backend/tests/backend_test.py"
+  ],
+  "success_rate": {"backend": "100% (21/21)", "frontend": "100% (12/12 E2E steps)"},
+  "test_credentials": "Generated dynamically: test_e2e_<ts>@example.com / test123. Pre-existing test@odysai.com / test123 was NOT re-verified — current backend_test.py creates fresh users per run. memory/test_credentials.md is stale: still references 'JWT bearer token in localStorage' and {token,user} response shape — should be updated to mention httpOnly access_token cookie and {user} response.",
+  "seed_data_creation": "Each pytest run creates ~3 fresh users (TEST_/test_ prefix, @example.com) + 1 throw-away itinerary (deleted at end). E2E run creates 1 user. Residual users remain in SQLite (harmless).",
+  "retest_needed": false,
+  "should_main_agent_self_test": false,
+  "context_for_next_testing_agent": "Backend regression: `pytest /app/backend/tests/backend_test.py -v --junitxml=/app/test_reports/pytest/pytest_results.xml` (10s, 21 tests). Cookie auth verified: signup/login set HttpOnly access_token + return {user} only; Bearer fallback still works; /logout requires auth & clears cookie. Gemini /api/chat takes ~5-15s, use >=60s timeout. Frontend requires >=1024px width (right preferences panel is lg+). One small doc-drift: /app/memory/test_credentials.md still describes the OLD localStorage JWT model — update if needed.",
+  "rca of the issue": "No outstanding bugs."
+}

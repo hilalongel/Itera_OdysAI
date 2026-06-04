@@ -1,0 +1,94 @@
+{
+  "theme": "light",
+  "archetype": "1 - Organic & Earthy",
+  "emotion": "Warm, Trusting, Calm, Exploratory",
+  "design_concept": "OdysAI feels less like a sterile AI terminal and more like a beautifully curated travel journal. We merge the utility of a ChatGPT-style conversational interface with the sensory warmth of travel photography, earthy typography, and asymmetrical bento grids.",
+  "colors": {
+    "background": {
+      "app": "#F7F6F2",
+      "sidebar": "#EFECE5",
+      "card": "#FFFFFF",
+      "chat_ai": "transparent",
+      "chat_user": "#C05621"
+    },
+    "text": {
+      "primary": "#292524",
+      "secondary": "#57534E",
+      "muted": "#78716C",
+      "on_brand": "#FFFFFF"
+    },
+    "brand": {
+      "primary": "#C05621",
+      "secondary": "#3F5E4D",
+      "accent": "#E28B5E"
+    },
+    "badges": {
+      "flight": { "bg": "#FCEADD", "text": "#C05621" },
+      "hotel": { "bg": "#E5EBE8", "text": "#3F5E4D" },
+      "activity": { "bg": "#EFECE5", "text": "#57534E" }
+    },
+    "border": "#E5E5E5"
+  },
+  "typography": {
+    "font_families": {
+      "heading": "Cormorant Garamond, serif",
+      "body": "Work Sans, sans-serif",
+      "mono": "JetBrains Mono, monospace"
+    },
+    "rules": {
+      "h1": "text-4xl sm:text-5xl font-heading font-medium tracking-tight text-[#292524]",
+      "h2": "text-2xl sm:text-3xl font-heading font-medium tracking-tight text-[#292524]",
+      "h3": "text-xl font-heading font-medium text-[#292524]",
+      "body": "text-base font-body text-[#57534E] leading-relaxed",
+      "labels": "text-xs font-mono uppercase tracking-[0.2em] text-[#78716C]"
+    }
+  },
+  "layout_and_spacing": {
+    "philosophy": "Generous spacing. Allow the content to breathe. Use asymmetric bento grids for form inputs and tight control room grids for itinerary data.",
+    "sidebar": "w-64 border-r border-[#E5E5E5] bg-[#EFECE5] h-screen flex flex-col p-6",
+    "main_chat": "flex-1 h-screen flex flex-col bg-[#F7F6F2] relative",
+    "right_panel": "w-full lg:w-[450px] border-l border-[#E5E5E5] bg-white h-screen overflow-y-auto hidden lg:flex flex-col p-8",
+    "chat_container": "max-w-3xl mx-auto w-full px-4 sm:px-8 py-8"
+  },
+  "components_strategy": {
+    "login_signup": "A beautifully centered card with no drop shadow. 1px border-stone-200. Background image split screen with the coastal landscape image on one side, and the minimal form on the other.",
+    "chat_input": "Floating glassmorphism pill. backdrop-blur-xl bg-white/70 border-stone-200 shadow-sm rounded-full px-6 py-4.",
+    "user_message": "Rounded-2xl rounded-tr-sm bg-[#C05621] text-white px-5 py-4 max-w-[85%]",
+    "ai_message": "Transparent background, text on canvas. Small sage green compass avatar. px-5 py-4 max-w-[90%]",
+    "travel_preferences_form": "Implemented as a Bento Grid. Destination is a full-width hero block. Dates, Budget, Walk Tolerance are square cells. Use native Shadcn Select, Calendar (not native date inputs), and Slider. No boring vertical forms.",
+    "day_by_day_itinerary": "Control Room Grid style. Vertical timeline with a left border connecting events. Activity cards have flat backgrounds, no shadows, 1px earthy border, and subtle category badges."
+  },
+  "micro_interactions": {
+    "buttons": "Hover state should lift slightly (-translate-y-0.5) and add shadow-sm. Use primary color (Terracotta) for 'Generate Itinerary' and 'Save'.",
+    "cards": "Hover states on saved itineraries should change background from transparent to black/5 (subtle darkening)."
+  },
+  "images": {
+    "login_hero": {
+      "url": "https://images.unsplash.com/photo-1770553128747-0ec1a368e395?crop=entropy&cs=srgb&fm=jpg&ixid=M3w3NDk1Nzd8MHwxfHNlYXJjaHwyfHxzY2VuaWMlMjBjb2FzdGFsJTIwbGFuZHNjYXBlJTIwdHJhdmVsfGVufDB8fHx8MTc4MDMyOTY2Nnww&ixlib=rb-4.1.0&q=85",
+      "description": "Rugged coastal landscape for the login/signup background to evoke travel."
+    },
+    "empty_state_texture": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/a7fd30bd-3884-4739-b1aa-0936349ac211/images/1595797195a93bda544bfec07098eb9af943441915ff1f785aa3462048006209.png",
+      "description": "Minimalist topography texture for the chat background empty state."
+    },
+    "ai_avatar": {
+      "url": "https://static.prod-images.emergentagent.com/jobs/a7fd30bd-3884-4739-b1aa-0936349ac211/images/22966a4ab277d78792812415445bf64a5136850c6e6c57db821d9925a197078d.png",
+      "description": "Elegant sage green compass avatar to represent the OdysAI bot."
+    }
+  },
+  "icons": {
+    "library": "lucide-react",
+    "usage": "Use stroke-width of 1.5 for a premium, lightweight feel."
+  },
+  "testing": {
+    "rules": "All interactive elements (buttons, inputs, links, itinerary cards) MUST include a kebab-case data-testid attribute describing its role."
+  },
+  "instructions_to_main_agent": [
+    "Install Shadcn UI and customize heavily based on colors defined here.",
+    "Do NOT use generic blue or purple. The primary brand color is Terracotta (#C05621).",
+    "Use split-screen layout: Left Sidebar for history, Center area for Chat, Right Panel for the generated Itinerary (or render it beautifully in the chat flow).",
+    "Apply 'font-heading' (Cormorant Garamond) to all major titles to maintain the travel journal aesthetic.",
+    "Never use native <input type='date'>. Use Shadcn's Calendar and Popover.",
+    "Apply data-testid to every clickable item to prevent testing failures."
+  ]
+}

@@ -1,0 +1,61 @@
+# ===== Secrets / environment =====
+.env
+.env.*
+*.env
+# keep a template (no real values) so collaborators know what to set
+!.env.example
+credentials.json
+*token.json*
+*.pem
+*.key
+.credentials
+
+# ===== Databases =====
+*.db
+*.sqlite
+*.sqlite3
+odysai.db
+
+# ===== Python =====
+__pycache__/
+*.py[cod]
+*$py.class
+*.egg-info/
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# Virtual environments (generic names + this project's venv folder names)
+venv/
+.venv/
+env/
+ENV/
+pyvenv.cfg
+backend/OdysAI/
+backend/OdysAI11/
+
+# ===== Node / React (frontend) =====
+node_modules/
+/.pnp
+.pnp.js
+/coverage
+/build
+dist/
+
+# Logs
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+.pnpm-debug.log*
+
+# ===== OS / editors =====
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+
+# ===== Misc =====
+*.zip
+*.tar.gz
+.cache/
+.vercel
